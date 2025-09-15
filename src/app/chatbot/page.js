@@ -4,9 +4,10 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 
 function ChatBot() {
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-const [loader,setLoader]=useState(false);
+  const [loader, setLoader] = useState(false);
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -28,25 +29,25 @@ const [loader,setLoader]=useState(false);
         ...prev,
         { sender: "bot", text: "Error: Failed to get response" },
       ]);
-       setLoader(false)
+      setLoader(false)
     }
 
     setInput("");
   };
   return (
     <>
-   {loader && <div className="loading-overlay"><span className="loader"></span></div>} 
-    <div>
-      <h1 className="heading">AI  CHATBOT</h1>
-      
-      {messages.length>0 && <div
-        style={{maxHeight:'600px',overflowY: "auto" }}
-        className="chatbotWrapper"
-      >
-        <div className="messages">
-          { messages.map((msg, index) => (
+      {loader && <div className="loading-overlay"><span className="loader"></span></div>}
+      <div>
+        <h1 className="heading">AI  CHATBOT</h1>
+
+        {messages.length > 0 && <div
+          style={{ maxHeight: '600px', overflowY: "auto" }}
+          className="chatbotWrapper"
+        >
+          <div className="messages">
+            {messages.map((msg, index) => (
               <div className={msg.sender} key={`${msg.sender}${index}`}>
-                <span  className="messageWrapper">
+                <span className="messageWrapper">
                   {msg.sender === "bot" ? (
                     <i className="fa-solid fa-robot"></i>
                   ) : (
@@ -54,24 +55,24 @@ const [loader,setLoader]=useState(false);
                   )}
                   &nbsp;&nbsp;
                   <div>
-                  <ReactMarkdown
-                    children={msg.text}
-                    components={{
-                      p: ({ children }) => (
-                        <p style={{ margin: 0, padding: 0 }}>{children}</p>
-                      ),
-                    }}
-                  />
+                    <ReactMarkdown
+                      children={msg.text}
+                      components={{
+                        p: ({ children }) => (
+                          <p style={{ margin: 0, padding: 0 }}>{children}</p>
+                        ),
+                      }}
+                    />
                   </div>
                 </span>
               </div>
 
-          ))}
+            ))}
+          </div>
+
         </div>
-       
-      </div>
-}
-       <div className="questionWrapper">
+        }
+        <div className="questionWrapper">
           <input
             type="text"
             value={input}
@@ -81,7 +82,7 @@ const [loader,setLoader]=useState(false);
           />
           <button onClick={sendMessage}><i className="fa fa-paper-plane" aria-hidden="true"></i></button>
         </div>
-    </div>
+      </div>
     </>
   );
 }
